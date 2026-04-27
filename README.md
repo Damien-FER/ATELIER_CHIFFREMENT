@@ -38,14 +38,20 @@ python app/file_crypto.py decrypt secret.enc secret.dec.txt
 cat secret.dec.txt
 ```
 **Que se passe-t-il si on modifie un octet du fichier chiffré ?**  
+Le déchiffrement échoue avec une erreur InvalidToken. Fernet utilise un HMAC (signature) qui vérifie l'intégrité : si un seul octet change, la signature ne correspond plus et le système bloque tout pour empêcher la lecture de données corrompues ou piratées.
+
  
 **Pourquoi ne faut-il pas commiter la clé dans Git ?**   
+Parce que l'historique Git est permanent. Si la clé est commitée, n'importe qui ayant accès au dépôt peut déchiffrer tes secrets. Une clé commitée est considérée comme compromise et doit être immédiatement révoquée et remplacée.
+
 
 ## 5) Atelier 1 :
 Dans cet atelier, la clé Fernet n'est plus générée dans le code mais stockée dans un Repository Secret Github. Ecrivez un nouveau programme **python app/fernet_atelier1.py** qui utilisera une clé Fernet caché dans un Secret GitHub pour encoder et décoder vos fichiers.
-
+![alt text](image.png)
 ## 6) Atelier 2 :
 Les bibliothèques qui proposent un système complet, sûr par défaut et simple d’usage comme Fernet de la bibliothèse Cryptographie sont relativement rares. Toutefois, la bibliothèque PyNaCl via l'outil SecretBox est une très bonne alternative. **travail demandé :** Construire une solution de chiffrement/déchiffrement basé sur l'outils SecretBox de la bibliothèque PyNaCl.
+
+![alt text](image-1.png)
 
 
 
